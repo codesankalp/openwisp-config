@@ -373,7 +373,7 @@ register() {
 # - any other error is logged but the agent continues execution
 #   and will eventually try again at the next cycle
 get_checksum() {
-	local exit_code status
+	local exit_code
 
 	for attempt_no in $(seq 1 "$CHECKSUM_MAX_RETRIES"); do
 		$FETCH_COMMAND -i "$CHECKSUM_URL" >"$1"
@@ -407,6 +407,7 @@ get_checksum() {
 	done
 
 	if ! is_http_status "$1" 200; then
+		local status
 		status=$(head -n 1 "$1")
 		logger -s "Failed to retrieve checksum: $status" \
 			-t openwisp \
