@@ -855,6 +855,7 @@ if [ ! -f "$BOOTUP" ]; then
 	if [ "$BOOTUP_DELAY" -ne "0" ]; then
 		# random bootup delay between 0..300 seconds
 		# shellcheck disable=SC3028
+		RANDOM=$(awk 'BEGIN{srand();print int(rand()*10^6)}')
 		DELAY="$((RANDOM % BOOTUP_DELAY))"
 		logger "Delaying startup for $DELAY seconds..." \
 			-t openwisp \
